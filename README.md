@@ -1,13 +1,13 @@
-# Leela · Plant health, made simple
+# TomatoCare · Plant health, made simple
 
-Leela is a clean, responsive plant-disease dashboard for growers. Upload a plant photo, try one of the included reference scans, review the possible disease, and follow the field-care actions.
+TomatoCare is a clean, responsive tomato plant disease dashboard for growers. Upload a plant photo, review the possible disease, and follow the prevention steps shown by the analyzer.
 
 ## Features
 
 - Tomato disease photo upload with JPG, PNG, and WEBP validation
 - Local preview and drag-and-drop upload
-- Included local reference photos for early blight, late blight, leaf mold, and Septoria leaf spot
-- Disease-specific result cards with confidence text and practical care actions
+- Included local reference photos in `assets/disease-photos/` for early blight, late blight, leaf mold, and Septoria leaf spot
+- Automatic analysis after upload, with disease-specific result cards and prevention steps
 - Plant disease library with tomato and apple examples
 - Crop expert contact directory with phone and message actions
 - Responsive desktop, tablet, and mobile interface
@@ -29,10 +29,10 @@ npm run preview
 
 ## Disease detection note
 
-The included reference scans demonstrate the user experience with local, known sample mappings. For arbitrary uploaded photos, `app.js` currently uses a filename-based demo fallback. Connect a trained CNN or inference API in the `analyzeButton` handler to return a production prediction from the image bytes.
+The analyzer automatically compares an uploaded photo with the bundled local reference images. It also recognizes filenames such as `early-blight.jpg` and `late-blight.jpg`. For production predictions on arbitrary photos, connect a trained CNN or inference API in `runAnalysis()` and return the disease key from the image bytes. Photos that do not match confidently are marked for expert review instead of being silently called healthy.
 
 ## Sample image attribution
 
-The included reference images are downloaded from the PlantVillage Dataset repository for demonstration purposes:
+The included reference images in `assets/disease-photos/` are downloaded from the PlantVillage Dataset repository for demonstration purposes:
 
 - https://github.com/spMohanty/PlantVillage-Dataset
