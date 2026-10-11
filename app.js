@@ -29,7 +29,7 @@ let activeDiagnosis = "healthy";
 let analysisRun = 0;
 let isAnalyzing = false;
 
-const referencePhotos = {
+let referencePhotos = {
   earlyBlight: "assets/disease-photos/tomato-early-blight.jpg",
   lateBlight: "assets/disease-photos/tomato-late-blight.jpg",
   leafMold: "assets/disease-photos/tomato-leaf-mold.jpg",
@@ -239,11 +239,29 @@ function setHealthResult(diagnosisKey = "healthy", confidenceOverride = "") {
 
 function inferUploadedDiagnosis(file) {
   const name = file.name.toLowerCase();
+  for (const [key, data] of Object.entries(diagnosisCatalog)) {
+    if (data.fileTokens?.some((token) => name.includes(token))) return key;
+  }
   if (name.includes("late") && name.includes("blight")) return "lateBlight";
   if (name.includes("early") && name.includes("blight")) return "earlyBlight";
   if (name.includes("mold") || name.includes("mildew")) return "leafMold";
   if (name.includes("septoria") || name.includes("spot")) return "septoria";
   return null;
+}
+
+async function loadDiseaseCatalog() {
+  try {
+    const response = await fetch("data/disease-catalog.json");
+    if (!response.ok) throw new Error(`Disease catalog request failed: ${response.status}`);
+    const data = await response.json();
+    Object.entries(data).forEach(([key, details]) => {
+      diagnosisCatalog[key] = { ...diagnosisCatalog[key], ...details };
+      if (details.image) referencePhotos[key] = details.image;
+    });
+    setHealthResult(activeDiagnosis);
+  } catch (error) {
+    console.warn("Disease catalog could not be loaded; using built-in defaults", error);
+  }
 }
 
 function imageSignature(source) {
@@ -371,3 +389,4 @@ document.querySelectorAll(".nav-item, .sidebar-tip a, .view-all, .guide-link").f
 });
 
 setHealthResult("healthy");
+loadDiseaseCatalog();
