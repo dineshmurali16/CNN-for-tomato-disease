@@ -1,13 +1,233 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>react</title>
+    <meta name="theme-color" content="#163d2e" />
+    <meta
+      name="description"
+      content="Leela helps growers identify plant diseases and take action early."
+    />
+    <title>Leela · Plant health, made simple</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <div class="app-shell">
+      <aside class="sidebar" id="sidebar">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path d="M16 11.5c-4.75 0-8.5 3.2-8.5 8.24C7.5 25.26 11.3 28 16 28s8.5-2.74 8.5-8.26c0-5.04-3.75-8.24-8.5-8.24Z" fill="currentColor" />
+              <path d="M15.82 11.82c-1.25-3.07-.8-5.47 1.6-7.32m-1.6 7.32c-2.3-.03-4.32-.9-5.7-2.5m5.7 2.5c2.2-.03 4.2-.8 5.6-2.26" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+              <path d="M16.9 4.55c1.86-.66 3.55-.34 4.64.43-.65 1.58-2.12 2.55-4.44 2.23-1.07-.15-1.4-1.53-.2-2.66Z" fill="#8ACB68" />
+            </svg>
+          </div>
+          <div>
+            <strong>Leela</strong>
+            <small>Plant health, made simple</small>
+          </div>
+        </div>
+
+        <p class="menu-label">Workspace</p>
+        <nav class="main-nav" aria-label="Main navigation">
+          <a class="nav-item active" href="#dashboard">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="8" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="15" width="7" height="6" rx="1.5"/></svg>
+            Overview
+          </a>
+          <a class="nav-item" href="#scan">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><circle cx="12" cy="12" r="3.5"/><path d="m14.7 14.7 2.2 2.2"/></svg>
+            New diagnosis <span class="nav-badge">+1</span>
+          </a>
+          <a class="nav-item" href="#history">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 12a8.5 8.5 0 1 0 2.5-6"/><path d="M3.5 5v5h5M12 7.5V12l3.2 2"/></svg>
+            Scan history
+          </a>
+          <a class="nav-item" href="#guides">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5v-13A2.5 2.5 0 0 1 6.5 3Z"/><path d="M8 7h8M8 11h6"/></svg>
+            Plant guides
+          </a>
+          <a class="nav-item" href="#library">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 1 4 17.5v-12Z"/><path d="M8 7h8M8 11h6M8 15h4"/></svg>
+            Disease library
+          </a>
+          <a class="nav-item" href="#experts">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.5"/><path d="M3.5 20c.4-3.2 2.2-5 5.5-5s5.1 1.8 5.5 5M14 16c.7-.7 1.7-1 3-1 2.3 0 3.5 1.2 3.8 3"/></svg>
+            Expert contacts
+          </a>
+        </nav>
+
+        <div class="sidebar-tip">
+          <div class="tip-sun" aria-hidden="true">✦</div>
+          <strong>Small steps,<br />healthy harvests.</strong>
+          <p>Check your plants weekly for the best results.</p>
+          <a href="#guides">View care tips <span>→</span></a>
+        </div>
+
+        <div class="sidebar-footer">
+          <a class="nav-item" href="#settings">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.7 1.7-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V20h-2.4v-.2a1.7 1.7 0 0 0-1.04-1.56 1.7 1.7 0 0 0-1.87.34l-.07.06-1.7-1.7.07-.06A1.7 1.7 0 0 0 8.45 15a1.7 1.7 0 0 0-1.56-1.03H6.7v-2.4h.2a1.7 1.7 0 0 0 1.56-1.04 1.7 1.7 0 0 0-.34-1.87l-.07-.07 1.7-1.7.07.07a1.7 1.7 0 0 0 1.87.34 1.7 1.7 0 0 0 1.04-1.56v-.2h2.4v.2a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.07 1.7 1.7-.06.07a1.7 1.7 0 0 0-.34 1.87 1.7 1.7 0 0 0 1.56 1.04h.2v2.4h-.2A1.7 1.7 0 0 0 19.4 15Z"/></svg>
+            Settings
+          </a>
+          <div class="account-mini">
+            <div class="avatar">AR</div>
+            <div><strong>Alex Rivera</strong><small>Green Valley Farm</small></div>
+            <button class="more-btn" aria-label="Account options">•••</button>
+          </div>
+        </div>
+      </aside>
+
+      <main class="main-content" id="dashboard">
+        <header class="topbar">
+          <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">
+            <span></span><span></span><span></span>
+          </button>
+          <div class="breadcrumb"><span>Workspace</span><i>/</i><strong>Overview</strong></div>
+          <div class="top-actions">
+            <button class="icon-btn notification-btn" aria-label="Notifications">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>
+              <span></span>
+            </button>
+            <div class="top-divider"></div>
+            <div class="top-user"><div class="avatar avatar-small">AR</div><span>Alex Rivera</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 10 5 5 5-5"/></svg></div>
+          </div>
+        </header>
+
+        <div class="page-content">
+          <section class="welcome-row">
+            <div>
+              <p class="eyebrow"><span class="eyebrow-dot"></span> Monday, October 14, 2024</p>
+              <h1>Good morning, Alex <span class="wave">✦</span></h1>
+              <p class="welcome-copy">Let’s keep your tomato plants thriving today.</p>
+            </div>
+            <div class="weather-pill">
+              <div class="weather-icon">☀</div>
+              <div><strong>24° C</strong><span>Sunny · Good for growing</span></div>
+            </div>
+          </section>
+
+          <section class="overview-stats" aria-label="Farm overview">
+            <div class="stat-card stat-primary">
+              <div class="stat-icon leaf-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4C10.2 4 5 7.86 5 14.3 5 17.5 7.4 20 10.6 20 17.05 20 20 13.8 20 4Z"/><path d="M4 21c2.2-4.4 5.5-7.65 10.3-10.2"/></svg></div>
+              <div><span class="stat-label">Plants being monitored</span><strong>24 <em>plants</em></strong><small><b>↑ 8%</b> from last month</small></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon scan-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3M16 4h3a1 1 0 0 1 1 1v3M20 16v3a1 1 0 0 1-1 1h-3M8 20H5a1 1 0 0 1-1-1v-3"/><circle cx="12" cy="12" r="3.5"/></svg></div>
+              <div><span class="stat-label">Total scans</span><strong>68 <em>scans</em></strong><small><b>12</b> this month</small></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon health-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 20-1.5-1.37C5.14 13.53 2 10.7 2 7.25A4.75 4.75 0 0 1 6.75 2.5c1.75 0 3.43.82 4.5 2.1 1.07-1.28 2.75-2.1 4.5-2.1A4.75 4.75 0 0 1 20.5 7.25c0 3.45-3.14 6.28-8.5 11.38L12 20Z"/></svg></div>
+              <div><span class="stat-label">Healthy plants</span><strong>21 <em>of 24</em></strong><small><b>87.5%</b> in good health</small></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon alert-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10.3 3.9-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.7-3.1l-8-14a2 2 0 0 0-3.4 0Z"/><path d="M12 9v4M12 17h.01"/></svg></div>
+              <div><span class="stat-label">Needs attention</span><strong>3 <em>plants</em></strong><small><b class="orange-text">Review recommended</b></small></div>
+            </div>
+          </section>
+
+          <div class="content-grid">
+            <section class="diagnosis-card" id="scan">
+              <div class="section-heading">
+                <div>
+                  <p class="section-kicker">Plant doctor <span class="live-dot"></span></p>
+                  <h2>What’s happening<br /><span>with your plant?</span></h2>
+                </div>
+                <div class="scan-number">01 <span>/ 03</span></div>
+              </div>
+
+               <div class="upload-zone" id="uploadZone">
+                <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" />
+                <div class="upload-visual" id="uploadVisual">
+                  <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+                  <div class="tomato-illustration" aria-hidden="true">
+                    <div class="tomato-leaf leaf-a"></div><div class="tomato-leaf leaf-b"></div>
+                    <div class="tomato-fruit"><span></span></div>
+                  </div>
+                </div>
+                <div class="upload-copy">
+                  <h3>Drop a photo of your tomato leaf here</h3>
+                  <p>We’ll look for signs of disease in seconds</p>
+                  <label class="upload-button" for="fileInput"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg> Choose a photo</label>
+                  <span class="file-note">JPG, PNG or WEBP · Max 10 MB</span>
+                 </div>
+               </div>
+               <div class="sample-heading"><span>Try a sample scan</span><small>Local reference photos</small></div>
+               <div class="sample-gallery" aria-label="Disease sample photos">
+                 <button class="sample-card" type="button" data-sample="earlyBlight" data-image="assets/tomato-early-blight.jpg" data-name="tomato-early-blight.jpg"><img src="assets/tomato-early-blight.jpg" alt="Tomato leaf showing early blight" /><span>Early blight</span><small>Tomato</small></button>
+                 <button class="sample-card" type="button" data-sample="lateBlight" data-image="assets/tomato-late-blight.jpg" data-name="tomato-late-blight.jpg"><img src="assets/tomato-late-blight.jpg" alt="Tomato showing late blight" /><span>Late blight</span><small>Tomato</small></button>
+                 <button class="sample-card" type="button" data-sample="leafMold" data-image="assets/tomato-leaf-mold.jpg" data-name="tomato-leaf-mold.jpg"><img src="assets/tomato-leaf-mold.jpg" alt="Tomato leaf showing leaf mold" /><span>Leaf mold</span><small>Tomato</small></button>
+                 <button class="sample-card" type="button" data-sample="septoria" data-image="assets/tomato-septoria-leaf-spot.jpg" data-name="tomato-septoria-leaf-spot.jpg"><img src="assets/tomato-septoria-leaf-spot.jpg" alt="Tomato leaf showing Septoria leaf spot" /><span>Septoria spot</span><small>Tomato</small></button>
+               </div>
+               <div class="selected-file" id="selectedFile" hidden>
+                <div class="file-preview"><img id="filePreview" alt="Selected tomato plant" /></div>
+                <div class="file-meta"><strong id="fileName">tomato-leaf.jpg</strong><span id="fileSize">Ready to scan</span></div>
+                <button class="remove-file" id="removeFile" aria-label="Remove selected photo">×</button>
+              </div>
+              <button class="analyze-button" id="analyzeButton" disabled><span class="button-icon">✦</span> Analyze my plant <span class="button-arrow">→</span></button>
+              <p class="privacy-note"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> Your photos stay private and are never shared.</p>
+            </section>
+
+            <aside class="right-column">
+              <section class="insight-card" id="resultCard">
+                <div class="card-title-row"><div><p class="section-kicker">Latest insight</p><h3 id="resultTitle">Your plants are looking good</h3></div><span class="status-pill healthy" id="resultStatus"><i></i> Healthy</span></div>
+                 <div class="health-progress"><div class="progress-ring"><svg viewBox="0 0 100 100" aria-hidden="true"><circle class="ring-bg" cx="50" cy="50" r="42"/><circle class="ring-value" cx="50" cy="50" r="42"/></svg><strong id="healthScore">87<span>%</span></strong></div><div class="progress-copy"><strong id="resultSubtext">Great work, Alex!</strong><p id="resultDescription">21 of your 24 monitored plants show no signs of disease.</p></div></div>
+                <div class="result-details" id="resultDetails" hidden>
+                  <div class="detected-label"><span class="alert-dot"></span> Possible issue detected</div>
+                  <p id="detectedName">Early blight</p>
+                  <span id="confidenceText">Confidence 92%</span>
+                </div>
+                <button class="text-button" id="viewReport">View health report <span>→</span></button>
+              </section>
+
+              <section class="owner-card" id="owner">
+                <div class="owner-header"><div><p class="section-kicker">Need a second opinion?</p><h3>Talk to your farm expert</h3></div><div class="online-status"><i></i> Online</div></div>
+                <div class="owner-profile"><div class="owner-avatar">JM<span></span></div><div><strong>Jordan Miller</strong><span>Crop specialist · 8 yrs exp.</span></div><div class="verified-mark">✓</div></div>
+                <p class="owner-copy">Get practical advice from the owner or your assigned crop specialist.</p>
+                <div class="owner-actions"><a href="tel:+15550184721" class="contact-button primary-contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5 4 5.1c-.8.5-.9 1.6-.6 2.5 1.5 4.7 7.8 10.9 12.5 12.5.9.3 2 0 2.5-.7l1.6-2.6-4-2.9-2.3 1.4c-1.8-.9-4.2-3.3-5.1-5.1L10 8 6.6 3.5Z"/></svg> Call owner</a><a href="sms:+15550184721" class="contact-button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7 7 0 0 1-7 7H8l-4 2v-9a7 7 0 0 1 7-7h2a7 7 0 0 1 7 7Z"/></svg> Message</a></div>
+                <div class="phone-row"><span>Owner contact</span><a href="tel:+15550184721">+1 (555) 018-4721</a></div>
+              </section>
+            </aside>
+          </div>
+
+          <section class="bottom-section" id="history">
+            <div class="section-heading compact-heading"><div><p class="section-kicker">Stay informed</p><h2>Recent activity</h2></div><a href="#history" class="view-all">View all <span>→</span></a></div>
+            <div class="activity-list">
+              <div class="activity-item"><div class="activity-icon disease-activity"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V9M12 13 7.5 9.5M12 16l4.5-3M12 9l-2.5-3M12 9l3-3"/><path d="M7.5 9.5 5 10M16.5 13l2.5.5"/></svg></div><div class="activity-copy"><strong>Plant scan completed</strong><span>Greenhouse A · 2 hours ago</span></div><span class="activity-result healthy-text">Healthy</span><span class="activity-arrow">→</span></div>
+              <div class="activity-item"><div class="activity-icon review-activity"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></svg></div><div class="activity-copy"><strong>Follow-up recommended</strong><span>Raised bed 02 · Yesterday</span></div><span class="activity-result review-text">Review</span><span class="activity-arrow">→</span></div>
+              <div class="activity-item"><div class="activity-icon guide-activity"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM8 8h8M8 12h6M8 16h4"/></svg></div><div class="activity-copy"><strong>Care guide completed</strong><span>Preventing leaf spot · Oct 10</span></div><span class="activity-result done-text">Done</span><span class="activity-arrow">→</span></div>
+            </div>
+          </section>
+
+          <section class="guide-strip" id="guides"><div class="guide-art"><div class="guide-sun"></div><div class="guide-leaf leaf-one"></div><div class="guide-leaf leaf-two"></div><div class="guide-ground"></div></div><div class="guide-content"><p class="section-kicker">This week’s care tip</p><h3>Keep leaves dry to prevent fungal disease</h3><p>Water at the base in the morning and leave space between plants for airflow.</p></div><a href="#guides" class="guide-link">Read guide <span>→</span></a></section>
+
+          <section class="library-section" id="library">
+            <div class="section-heading compact-heading"><div><p class="section-kicker">Know the signs</p><h2>Plant disease library</h2></div><a href="#library" class="view-all">Browse all <span>→</span></a></div>
+            <div class="disease-library">
+              <article class="disease-card"><img src="assets/tomato-early-blight.jpg" alt="Early blight on a tomato leaf" /><div><span class="plant-tag tomato-tag">Tomato</span><h3>Early blight</h3><p>Brown target-like spots on older leaves.</p><a href="#scan" data-library-sample="earlyBlight">Scan this sign <span>→</span></a></div></article>
+              <article class="disease-card"><img src="assets/tomato-late-blight.jpg" alt="Late blight on a tomato" /><div><span class="plant-tag tomato-tag">Tomato</span><h3>Late blight</h3><p>Dark, water-soaked lesions that spread quickly.</p><a href="#scan" data-library-sample="lateBlight">Scan this sign <span>→</span></a></div></article>
+              <article class="disease-card"><img src="assets/tomato-leaf-mold.jpg" alt="Leaf mold on a tomato leaf" /><div><span class="plant-tag tomato-tag">Tomato</span><h3>Leaf mold</h3><p>Yellow patches with olive growth underneath.</p><a href="#scan" data-library-sample="leafMold">Scan this sign <span>→</span></a></div></article>
+              <article class="disease-card"><img src="assets/apple-scab.jpg" alt="Apple leaf showing apple scab" /><div><span class="plant-tag apple-tag">Apple</span><h3>Apple scab</h3><p>Olive-brown spots on leaves and young fruit.</p><a href="#experts">See care details <span>→</span></a></div></article>
+            </div>
+          </section>
+
+          <section class="experts-section" id="experts">
+            <div class="section-heading compact-heading"><div><p class="section-kicker">People who can help</p><h2>Expert contacts by crop</h2></div><span class="directory-note">Available today · 3 specialists</span></div>
+            <div class="expert-grid">
+              <article class="expert-card"><div class="expert-avatar tomato-expert">JM<span></span></div><div class="expert-info"><strong>Jordan Miller</strong><span>Tomato &amp; pepper specialist</span></div><a class="expert-call" href="tel:+15550184721" aria-label="Call Jordan Miller">☎</a><small>+1 (555) 018-4721</small></article>
+              <article class="expert-card"><div class="expert-avatar fruit-expert">SK<span></span></div><div class="expert-info"><strong>Sarah Kim</strong><span>Fruit tree disease guide</span></div><a class="expert-call" href="tel:+15550186204" aria-label="Call Sarah Kim">☎</a><small>+1 (555) 018-6204</small></article>
+              <article class="expert-card"><div class="expert-avatar veg-expert">DO<span></span></div><div class="expert-info"><strong>Daniel Okafor</strong><span>Vegetable crop advisor</span></div><a class="expert-call" href="tel:+15550187319" aria-label="Call Daniel Okafor">☎</a><small>+1 (555) 018-7319</small></article>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"><span>✓</span><p>Photo added successfully</p></div>
+    <div class="modal-overlay" id="reportModal" hidden><div class="report-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><button class="modal-close" id="modalClose" aria-label="Close report">×</button><p class="section-kicker">Plant health report</p><h2 id="modalTitle">Your tomato plant is healthy</h2><div class="modal-score"><strong id="modalScore">87%</strong><span>overall health score</span></div><div class="report-checks"><div><span>✓</span><strong>No visible leaf spots</strong></div><div><span>✓</span><strong>Strong leaf color</strong></div><div><span>✓</span><strong>Good plant vigor</strong></div></div><button class="analyze-button modal-done" id="modalDone">Done</button></div></div>
+    <script type="module" src="/app.js"></script>
   </body>
 </html>
