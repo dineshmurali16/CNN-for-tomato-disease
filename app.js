@@ -19,6 +19,9 @@ const detectedName = document.getElementById("detectedName");
 const confidenceText = document.getElementById("confidenceText");
 const affectedPart = document.getElementById("affectedPart");
 const preventionList = document.getElementById("preventionList");
+const followUpText = document.getElementById("followUpText");
+const activityFeed = document.getElementById("activityFeed");
+const datasetSummary = document.getElementById("datasetSummary");
 const healthScore = document.getElementById("healthScore");
 const viewReport = document.getElementById("viewReport");
 const toast = document.getElementById("toast");
@@ -34,11 +37,13 @@ let analysisRun = 0;
 let isAnalyzing = false;
 
 let referencePhotos = {
-  earlyBlight: "assets/disease-photos/tomato-early-blight.jpg",
-  lateBlight: "assets/disease-photos/tomato-late-blight.jpg",
-  leafMold: "assets/disease-photos/tomato-leaf-mold.jpg",
-  septoria: "assets/disease-photos/tomato-septoria-leaf-spot.jpg"
+  earlyBlight: ["assets/disease-photos/tomato-early-blight.jpg"],
+  lateBlight: ["assets/disease-photos/tomato-late-blight.jpg"],
+  leafMold: ["assets/disease-photos/tomato-leaf-mold.jpg"],
+  septoria: ["assets/disease-photos/tomato-septoria-leaf-spot.jpg"]
 };
+let datasetManifest = null;
+const datasetHashLookup = new Map();
 
 const diagnosisCatalog = {
   healthy: {
@@ -133,6 +138,23 @@ const diagnosisCatalog = {
   }
 };
 
+const followUpPlans = {
+  healthy: "Recheck new growth in 7 days and upload another photo if spots or curling appear.",
+  earlyBlight: "Recheck the lower leaves in 48 hours. Contact Leela if the spots reach new growth.",
+  lateBlight: "Isolate and recheck within 24 hours. Contact Shiva immediately if nearby plants show symptoms.",
+  leafMold: "Improve ventilation today, then recheck leaf undersides in 3 days.",
+  septoria: "Remove spotted leaves and recheck the plant in 48 hours for new lesions.",
+  bacterialSpot: "Keep foliage dry and recheck new leaves in 3 days; ask Naveen if fruit spots increase.",
+  targetSpot: "Recheck older foliage in 48 hours and record whether the rings are spreading.",
+  yellowLeafCurl: "Inspect whiteflies today and recheck new growth in 3 days.",
+  mosaicVirus: "Separate the plant today and ask an expert to confirm before replanting.",
+  spiderMites: "Rinse and recheck the undersides in 48 hours for fresh webbing.",
+  fruitLateBlight: "Remove affected fruit now and inspect neighboring plants again tomorrow.",
+  blossomEndRot: "Stabilize watering and recheck the next fruit set; do not add calcium without a soil test.",
+  fruitCracking: "Keep irrigation even and inspect ripening fruit again in 2 days.",
+  uncertain: "Take a closer photo in natural light and ask a crop specialist to confirm within 48 hours."
+};
+
 const guideKnowledge = {
   major: {
     summary: "The major tomato diseases listed in crop-protection references. Check the lower leaves, stems, roots, and fruit as symptoms develop.",
@@ -179,7 +201,7 @@ function renderGuideCategory(category = "major") {
   guideCategorySummary.textContent = group.summary;
   guideDiseaseGrid.innerHTML = group.items.map((item) => {
     const catalogEntry = item.scanKey ? diagnosisCatalog[item.scanKey] : null;
-    const image = catalogEntry?.image || referencePhotos[item.scanKey];
+    const image = referencePhotos[item.scanKey]?.[0] || catalogEntry?.image;
     const typeClass = category === "fruit" ? "fruit-guide-type" : category === "pest" ? "pest-guide-type" : "";
     const scanButton = item.scanKey
       ? `<button class="guide-scan-link" type="button" data-guide-sample="${item.scanKey}">Scan this disease <span>→</span></button>`
@@ -294,7 +316,17 @@ function setHealthResult(diagnosisKey = "healthy", confidenceOverride = "") {
   confidenceText.textContent = confidenceOverride || result.confidence;
   affectedPart.textContent = `Affected part: ${result.bodyPart || (result.isDisease ? "Leaf" : "Leaf or fruit")}`;
   preventionList.innerHTML = result.prevention.map((item) => `<li>${item}</li>`).join("");
+  followUpText.textContent = result.followUp || followUpPlans[activeDiagnosis] || followUpPlans.uncertain;
   viewReport.innerHTML = result.isDisease ? 'View prevention plan <span>→</span>' : 'View health report <span>→</span>';
+}
+
+function addFollowUpActivity(result) {
+  if (!activityFeed) return;
+  const item = document.createElement("div");
+  item.className = `activity-item activity-new ${result.isDisease ? "activity-follow-up" : "activity-healthy"}`;
+  item.innerHTML = `<div class="activity-icon ${result.isDisease ? "review-activity" : "disease-activity"}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div><div class="activity-copy"><strong>${result.isDisease ? "Follow-up recommended" : "Healthy check recorded"}</strong><span>${result.name} · Just now</span></div><span class="activity-result ${result.isDisease ? "review-text" : "healthy-text"}">${result.isDisease ? "Action due" : "Planned"}</span><span class="activity-arrow">→</span>`;
+  activityFeed.prepend(item);
+  while (activityFeed.children.length > 8) activityFeed.removeChild(activityFeed.lastElementChild);
 }
 
 function inferUploadedDiagnosis(file) {
@@ -318,12 +350,40 @@ async function loadDiseaseCatalog() {
     const data = await response.json();
     Object.entries(data).forEach(([key, details]) => {
       diagnosisCatalog[key] = { ...diagnosisCatalog[key], ...details };
-      if (details.image) referencePhotos[key] = details.image;
+      if (details.image && !referencePhotos[key]) referencePhotos[key] = [details.image];
     });
     setHealthResult(activeDiagnosis);
     renderGuideCategory(document.querySelector(".guide-tab.active")?.dataset.guideCategory || "major");
   } catch (error) {
     console.warn("Disease catalog could not be loaded; using built-in defaults", error);
+  }
+}
+
+async function loadDatasetManifest() {
+  try {
+    const response = await fetch("dataset/manifest.json");
+    if (!response.ok) throw new Error(`Dataset manifest request failed: ${response.status}`);
+    datasetManifest = await response.json();
+    datasetHashLookup.clear();
+    datasetManifest.images.forEach((image) => datasetHashLookup.set(image.sha256, image.key));
+    referencePhotos = datasetManifest.images.reduce((groups, image) => {
+      if (!groups[image.key]) groups[image.key] = [];
+      groups[image.key].push(image.path);
+      return groups;
+    }, {});
+    referenceSignatures.clear();
+    if (datasetSummary) datasetSummary.textContent = `Local dataset · ${datasetManifest.imageCount} images · ${datasetManifest.classCount} categories`;
+    datasetManifest.images.forEach((image) => {
+      const sample = document.querySelector(`[data-sample="${image.key}"]`);
+      if (sample && image.path.endsWith("reference-01.jpg")) {
+        sample.dataset.image = image.path;
+        const preview = sample.querySelector("img");
+        if (preview) preview.src = image.path;
+      }
+    });
+    renderGuideCategory(document.querySelector(".guide-tab.active")?.dataset.guideCategory || "major");
+  } catch (error) {
+    console.warn("Local dataset manifest could not be loaded; using fallback references", error);
   }
 }
 
@@ -349,11 +409,11 @@ function imageSignature(source) {
 }
 
 const referenceSignatures = new Map();
-async function getReferenceSignature(key) {
-  if (!referenceSignatures.has(key)) {
-    referenceSignatures.set(key, imageSignature(referencePhotos[key]));
+async function getReferenceSignature(source) {
+  if (!referenceSignatures.has(source)) {
+    referenceSignatures.set(source, imageSignature(source));
   }
-  return referenceSignatures.get(key);
+  return referenceSignatures.get(source);
 }
 
 function signatureDistance(first, second) {
@@ -364,6 +424,13 @@ function signatureDistance(first, second) {
 }
 
 async function classifyUploadedPhoto(file) {
+  if (datasetManifest && !file.isSample && file.arrayBuffer) {
+    const bytes = await file.arrayBuffer();
+    const digest = await crypto.subtle.digest("SHA-256", bytes);
+    const hash = Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+    const exactMatch = datasetHashLookup.get(hash);
+    if (exactMatch) return { key: exactMatch, confidence: "Exact match · Identified from the local TomatoCare dataset" };
+  }
   const filenameDiagnosis = inferUploadedDiagnosis(file);
   if (filenameDiagnosis) return { key: filenameDiagnosis, confidence: "Filename hint · Confirm with a clear leaf close-up" };
   if (file.isSample && pendingDiagnosis) return { key: pendingDiagnosis, confidence: "Bundled reference photo · Matched exactly" };
@@ -371,14 +438,14 @@ async function classifyUploadedPhoto(file) {
   const objectUrl = URL.createObjectURL(file);
   try {
     const uploadedSignature = await imageSignature(objectUrl);
-    const candidates = await Promise.all(Object.keys(referencePhotos).map(async (key) => ({
-      key,
-      distance: signatureDistance(uploadedSignature, await getReferenceSignature(key))
-    })));
+    const candidates = await Promise.all(Object.entries(referencePhotos).map(async ([key, sources]) => {
+      const distances = await Promise.all(sources.map(async (source) => signatureDistance(uploadedSignature, await getReferenceSignature(source))));
+      return { key, distance: Math.min(...distances) };
+    }));
     candidates.sort((first, second) => first.distance - second.distance);
     const closest = candidates[0];
     if (closest && closest.distance <= 0.08) {
-      const confidence = `${Math.max(85, Math.round(100 - closest.distance * 100))}% visual match to local reference`;
+      const confidence = `${Math.max(85, Math.round(100 - closest.distance * 100))}% visual match across ${datasetManifest?.imageCount || "local"} reference photos`;
       return { key: closest.key, confidence };
     }
   } catch (error) {
@@ -407,6 +474,7 @@ async function runAnalysis() {
     resultCard.classList.remove("result-pulse");
     void resultCard.offsetWidth;
     resultCard.classList.add("result-pulse");
+    addFollowUpActivity(result);
     showToast(result.toast);
   } finally {
     isAnalyzing = false;
@@ -478,4 +546,4 @@ document.querySelectorAll(".nav-item, .sidebar-tip a, .view-all, .guide-link").f
 
 setHealthResult("healthy");
 renderGuideCategory("major");
-loadDiseaseCatalog();
+loadDiseaseCatalog().then(loadDatasetManifest);

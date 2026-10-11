@@ -78,9 +78,9 @@
             <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.88l.06.06-1.7 1.7-.06-.06a1.7 1.7 0 0 0-1.88-.34 1.7 1.7 0 0 0-1.03 1.56V20h-2.4v-.2a1.7 1.7 0 0 0-1.04-1.56 1.7 1.7 0 0 0-1.87.34l-.07.06-1.7-1.7.07-.06A1.7 1.7 0 0 0 8.45 15a1.7 1.7 0 0 0-1.56-1.03H6.7v-2.4h.2a1.7 1.7 0 0 0 1.56-1.04 1.7 1.7 0 0 0-.34-1.87l-.07-.07 1.7-1.7.07.07a1.7 1.7 0 0 0 1.87.34 1.7 1.7 0 0 0 1.04-1.56v-.2h2.4v.2a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.88-.34l.06-.07 1.7 1.7-.06.07a1.7 1.7 0 0 0-.34 1.87 1.7 1.7 0 0 0 1.56 1.04h.2v2.4h-.2A1.7 1.7 0 0 0 19.4 15Z"/></svg>
             Settings
           </a>
-          <div class="account-mini">
-            <div class="avatar">AR</div>
-            <div><strong>Alex Rivera</strong><small>Green Valley Farm</small></div>
+                <div class="account-mini">
+            <div class="avatar">LE</div>
+            <div><strong>Leela</strong><small>TomatoCare owner</small></div>
             <button class="more-btn" aria-label="Account options">•••</button>
           </div>
         </div>
@@ -179,7 +179,7 @@
                   <span class="file-note">JPG, PNG or WEBP · Max 10 MB</span>
                  </div>
                </div>
-               <div class="sample-heading"><span>Try a sample scan</span><small>Local reference photos</small></div>
+               <div class="sample-heading"><span>Try a sample scan</span><small id="datasetSummary">Local reference dataset loading…</small></div>
                <div class="sample-gallery" aria-label="Disease sample photos">
                  <button class="sample-card" type="button" data-sample="earlyBlight" data-image="assets/disease-photos/tomato-early-blight.jpg" data-name="tomato-early-blight.jpg"><img src="assets/disease-photos/tomato-early-blight.jpg" alt="Tomato leaf showing early blight" /><span>Early blight</span><small>Tomato</small></button>
                  <button class="sample-card" type="button" data-sample="lateBlight" data-image="assets/disease-photos/tomato-late-blight.jpg" data-name="tomato-late-blight.jpg"><img src="assets/disease-photos/tomato-late-blight.jpg" alt="Tomato showing late blight" /><span>Late blight</span><small>Tomato</small></button>
@@ -215,13 +215,14 @@
                    <span class="body-part" id="affectedPart">Affected part: Leaf</span>
                    <div class="prevention-heading">Prevention and next steps</div>
                    <ul class="prevention-list" id="preventionList"></ul>
+                   <div class="follow-up-box"><strong>Follow-up</strong><span id="followUpText">Recheck new growth in 7 days and upload another photo if spots or curling appear.</span></div>
                  </div>
                 <button class="text-button" id="viewReport">View health report <span>→</span></button>
               </section>
 
               <section class="owner-card" id="owner">
                 <div class="owner-header"><div><p class="section-kicker">Need a second opinion?</p><h3>Talk to your farm expert</h3></div><div class="online-status"><i></i> Online</div></div>
-                <div class="owner-profile"><div class="owner-avatar">JM<span></span></div><div><strong>Jordan Miller</strong><span>Crop specialist · 8 yrs exp.</span></div><div class="verified-mark">✓</div></div>
+                <div class="owner-profile"><div class="owner-avatar">LE<span></span></div><div><strong>Leela</strong><span>Tomato crop specialist · 8 yrs exp.</span></div><div class="verified-mark">✓</div></div>
                 <p class="owner-copy">Get practical advice from the owner or your assigned crop specialist.</p>
                 <div class="owner-actions"><a href="tel:+15550184721" class="contact-button primary-contact"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 3.5 4 5.1c-.8.5-.9 1.6-.6 2.5 1.5 4.7 7.8 10.9 12.5 12.5.9.3 2 0 2.5-.7l1.6-2.6-4-2.9-2.3 1.4c-1.8-.9-4.2-3.3-5.1-5.1L10 8 6.6 3.5Z"/></svg> Call owner</a><a href="sms:+15550184721" class="contact-button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.5a7 7 0 0 1-7 7H8l-4 2v-9a7 7 0 0 1 7-7h2a7 7 0 0 1 7 7Z"/></svg> Message</a></div>
                 <div class="phone-row"><span>Owner contact</span><a href="tel:+15550184721">+1 (555) 018-4721</a></div>
@@ -231,7 +232,7 @@
 
           <section class="bottom-section" id="history">
             <div class="section-heading compact-heading"><div><p class="section-kicker">Stay informed</p><h2>Recent activity</h2></div><a href="#history" class="view-all">View all <span>→</span></a></div>
-            <div class="activity-list">
+             <div class="activity-list" id="activityFeed">
               <div class="activity-item"><div class="activity-icon disease-activity"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20V9M12 13 7.5 9.5M12 16l4.5-3M12 9l-2.5-3M12 9l3-3"/><path d="M7.5 9.5 5 10M16.5 13l2.5.5"/></svg></div><div class="activity-copy"><strong>Plant scan completed</strong><span>Greenhouse A · 2 hours ago</span></div><span class="activity-result healthy-text">Healthy</span><span class="activity-arrow">→</span></div>
               <div class="activity-item"><div class="activity-icon review-activity"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-2.9-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"/></svg></div><div class="activity-copy"><strong>Follow-up recommended</strong><span>Raised bed 02 · Yesterday</span></div><span class="activity-result review-text">Review</span><span class="activity-arrow">→</span></div>
               <div class="activity-item"><div class="activity-icon guide-activity"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM8 8h8M8 12h6M8 16h4"/></svg></div><div class="activity-copy"><strong>Care guide completed</strong><span>Preventing leaf spot · Oct 10</span></div><span class="activity-result done-text">Done</span><span class="activity-arrow">→</span></div>
@@ -265,9 +266,9 @@
           <section class="experts-section" id="experts">
             <div class="section-heading compact-heading"><div><p class="section-kicker">People who can help</p><h2>Expert contacts by crop</h2></div><span class="directory-note">Available today · 3 specialists</span></div>
             <div class="expert-grid">
-              <article class="expert-card"><div class="expert-avatar tomato-expert">JM<span></span></div><div class="expert-info"><strong>Jordan Miller</strong><span>Tomato &amp; pepper specialist</span></div><a class="expert-call" href="tel:+15550184721" aria-label="Call Jordan Miller">☎</a><small>+1 (555) 018-4721</small></article>
-              <article class="expert-card"><div class="expert-avatar fruit-expert">SK<span></span></div><div class="expert-info"><strong>Sarah Kim</strong><span>Fruit tree disease guide</span></div><a class="expert-call" href="tel:+15550186204" aria-label="Call Sarah Kim">☎</a><small>+1 (555) 018-6204</small></article>
-              <article class="expert-card"><div class="expert-avatar veg-expert">DO<span></span></div><div class="expert-info"><strong>Daniel Okafor</strong><span>Vegetable crop advisor</span></div><a class="expert-call" href="tel:+15550187319" aria-label="Call Daniel Okafor">☎</a><small>+1 (555) 018-7319</small></article>
+              <article class="expert-card"><div class="expert-avatar tomato-expert">LE<span></span></div><div class="expert-info"><strong>Leela</strong><span>Tomato &amp; pepper specialist</span></div><a class="expert-call" href="tel:+15550184721" aria-label="Call Leela">☎</a><small>+1 (555) 018-4721</small></article>
+              <article class="expert-card"><div class="expert-avatar fruit-expert">SH<span></span></div><div class="expert-info"><strong>Shiva</strong><span>Fruit disease guide</span></div><a class="expert-call" href="tel:+15550186204" aria-label="Call Shiva">☎</a><small>+1 (555) 018-6204</small></article>
+              <article class="expert-card"><div class="expert-avatar veg-expert">NA<span></span></div><div class="expert-info"><strong>Naveen</strong><span>Vegetable crop advisor</span></div><a class="expert-call" href="tel:+15550187319" aria-label="Call Naveen">☎</a><small>+1 (555) 018-7319</small></article>
             </div>
           </section>
         </div>
