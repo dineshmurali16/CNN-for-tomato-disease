@@ -23,6 +23,9 @@ const healthScore = document.getElementById("healthScore");
 const viewReport = document.getElementById("viewReport");
 const toast = document.getElementById("toast");
 const reportModal = document.getElementById("reportModal");
+const guideCategoryTabs = document.getElementById("guideCategoryTabs");
+const guideCategorySummary = document.getElementById("guideCategorySummary");
+const guideDiseaseGrid = document.getElementById("guideDiseaseGrid");
 
 let currentFile = null;
 let pendingDiagnosis = null;
@@ -129,6 +132,61 @@ const diagnosisCatalog = {
     prevention: ["Avoid overhead watering until identified", "Isolate a strongly affected plant", "Do not apply treatment until the disease is confirmed"]
   }
 };
+
+const guideKnowledge = {
+  major: {
+    summary: "The major tomato diseases listed in crop-protection references. Check the lower leaves, stems, roots, and fruit as symptoms develop.",
+    items: [
+      { name: "Damping off", type: "Soil-borne", symptoms: "Seedlings collapse at the soil line.", action: "Use clean media and avoid overwatering." },
+      { name: "Early blight", type: "Fungal", symptoms: "Target-like brown spots on older leaves.", action: "Remove lower leaves and mulch soil.", scanKey: "earlyBlight" },
+      { name: "Fusarium wilt", type: "Fungal", symptoms: "One-sided yellowing and wilt despite moist soil.", action: "Remove plants and rotate resistant varieties." },
+      { name: "Septoria leaf spot", type: "Fungal", symptoms: "Small pale-centered spots on lower leaves.", action: "Keep foliage dry and clear leaf debris.", scanKey: "septoria" },
+      { name: "Late blight", type: "Oomycete", symptoms: "Water-soaked leaf lesions and rapid browning.", action: "Isolate the plant and bag infected material.", scanKey: "lateBlight" },
+      { name: "Bacterial wilt", type: "Bacterial", symptoms: "Sudden wilt with green leaves still attached.", action: "Remove plants and sanitize tools." },
+      { name: "Bacterial canker", type: "Bacterial", symptoms: "Stem streaks, leaf-edge scorch, and cankers.", action: "Use clean seed and avoid wet handling." },
+      { name: "Tomato spotted wilt", type: "Viral", symptoms: "Bronze rings, spots, and stunted new growth.", action: "Control thrips and remove infected plants." },
+      { name: "Leaf curl", type: "Viral", symptoms: "Upward yellow curl and reduced plant growth.", action: "Check for whiteflies and isolate plants.", scanKey: "yellowLeafCurl" }
+    ]
+  },
+  minor: {
+    summary: "Less frequent does not mean less important. Compare the symptom pattern before choosing any treatment.",
+    items: [
+      { name: "Powdery mildew", type: "Fungal", symptoms: "White powdery growth on leaf surfaces.", action: "Open airflow and remove heavily affected leaves." },
+      { name: "Bacterial leaf spot", type: "Bacterial", symptoms: "Small dark spots on leaves and young fruit.", action: "Use drip watering and disinfect tools.", scanKey: "bacterialSpot" },
+      { name: "Mosaic", type: "Viral", symptoms: "Mottled light and dark green leaves.", action: "Remove symptomatic plants and wash hands.", scanKey: "mosaicVirus" }
+    ]
+  },
+  fruit: {
+    summary: "Fruit symptoms include infections and physiological disorders. Check whether the issue starts at the blossom end, skin, or stem before acting.",
+    items: [
+      { name: "Fruit late blight", type: "Fruit infection", symptoms: "Rough brown water-soaked lesions on fruit.", action: "Pick, bag, and remove affected fruit.", scanKey: "fruitLateBlight" },
+      { name: "Blossom-end rot", type: "Physiological", symptoms: "Dark sunken patch at the blossom end.", action: "Keep soil moisture even; do not over-fertilize.", scanKey: "blossomEndRot" },
+      { name: "Fruit cracking", type: "Physiological", symptoms: "Radial or concentric splits in ripening fruit.", action: "Use mulch and avoid irregular watering.", scanKey: "fruitCracking" },
+      { name: "Target spot", type: "Fungal", symptoms: "Concentric brown rings on leaves or fruit.", action: "Improve airflow and remove crop debris.", scanKey: "targetSpot" }
+    ]
+  },
+  pest: {
+    summary: "Pests and insect vectors can damage leaves directly or spread viruses. Always inspect the underside of leaves.",
+    items: [
+      { name: "Two-spotted spider mites", type: "Pest", symptoms: "Fine speckling, bronzing, and delicate webbing.", action: "Rinse leaf undersides and reduce drought stress.", scanKey: "spiderMites" },
+      { name: "Whiteflies", type: "Virus vector", symptoms: "Tiny white insects fly when foliage is disturbed.", action: "Use monitoring cards and approved controls." },
+    ]
+  }
+};
+
+function renderGuideCategory(category = "major") {
+  const group = guideKnowledge[category] || guideKnowledge.major;
+  guideCategorySummary.textContent = group.summary;
+  guideDiseaseGrid.innerHTML = group.items.map((item) => {
+    const catalogEntry = item.scanKey ? diagnosisCatalog[item.scanKey] : null;
+    const image = catalogEntry?.image || referencePhotos[item.scanKey];
+    const typeClass = category === "fruit" ? "fruit-guide-type" : category === "pest" ? "pest-guide-type" : "";
+    const scanButton = item.scanKey
+      ? `<button class="guide-scan-link" type="button" data-guide-sample="${item.scanKey}">Scan this disease <span>→</span></button>`
+      : '<button class="guide-scan-link disabled" type="button" disabled>Guide details <span>↗</span></button>';
+    return `<article class="guide-disease-card"><div class="guide-disease-image">${image ? `<img src="${image}" alt="${item.name} reference" />` : '<div class="guide-disease-placeholder">✦</div>'}</div><div class="guide-disease-content"><span class="guide-type ${typeClass}">${item.type}</span><h3>${item.name}</h3><p><strong>Signs:</strong> ${item.symptoms}</p><small><strong>Do:</strong> ${item.action}</small>${scanButton}</div></article>`;
+  }).join("");
+}
 
 function showToast(message) {
   toast.querySelector("p").textContent = message;
@@ -263,6 +321,7 @@ async function loadDiseaseCatalog() {
       if (details.image) referencePhotos[key] = details.image;
     });
     setHealthResult(activeDiagnosis);
+    renderGuideCategory(document.querySelector(".guide-tab.active")?.dataset.guideCategory || "major");
   } catch (error) {
     console.warn("Disease catalog could not be loaded; using built-in defaults", error);
   }
@@ -368,6 +427,31 @@ document.querySelectorAll("[data-library-sample]").forEach((link) => link.addEve
   }
 }));
 
+guideCategoryTabs.addEventListener("click", (event) => {
+  const tab = event.target.closest(".guide-tab");
+  if (!tab) return;
+  const category = tab.dataset.guideCategory;
+  document.querySelectorAll(".guide-tab").forEach((item) => {
+    const isActive = item === tab;
+    item.classList.toggle("active", isActive);
+    item.setAttribute("aria-selected", String(isActive));
+  });
+  renderGuideCategory(category);
+});
+
+guideDiseaseGrid.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-guide-sample]");
+  if (!button) return;
+  const sample = document.querySelector(`[data-sample="${button.dataset.guideSample}"]`);
+  if (sample) {
+    selectSample(sample);
+    document.getElementById("scan").scrollIntoView({ behavior: "smooth" });
+    return;
+  }
+  showToast("Add a clear close-up photo to analyze this disease");
+  document.getElementById("scan").scrollIntoView({ behavior: "smooth" });
+});
+
 analyzeButton.addEventListener("click", () => runAnalysis());
 
 viewReport.addEventListener("click", () => {
@@ -393,4 +477,5 @@ document.querySelectorAll(".nav-item, .sidebar-tip a, .view-all, .guide-link").f
 });
 
 setHealthResult("healthy");
+renderGuideCategory("major");
 loadDiseaseCatalog();

@@ -9,6 +9,8 @@ TomatoCare is a clean, responsive tomato plant disease dashboard for growers. Up
 - Included local reference photos in one upload folder, `assets/disease-photos/`, covering leaf diseases, fruit rot, blossom-end rot, fruit cracking, and healthy fruit/leaf examples
 - Automatic analysis after upload, with disease-specific result cards and prevention steps
 - Structured disease knowledge in `public/data/disease-catalog.json` with symptoms, affected plant part, actions, and prevention guidance
+- A top Tomato Disease Guide organized into Major diseases, Minor diseases, Fruit disorders, and Pests & vectors
+- Guide cards for TNAU-style crop-protection topics such as damping off, Fusarium wilt, bacterial wilt, bacterial canker, spotted wilt, powdery mildew, and whiteflies
 - Plant disease library with tomato and apple examples
 - Crop expert contact directory with phone and message actions
 - Responsive desktop, tablet, and mobile interface
@@ -31,6 +33,14 @@ npm run preview
 ## Disease detection note
 
 The analyzer automatically compares an uploaded photo with the bundled local reference images. It recognizes leaf and fruit conditions including early blight, late blight fruit rot, bacterial spot, target spot, leaf mold, Septoria, yellow leaf curl virus, mosaic virus, spider mites, blossom-end rot, and fruit cracking. It also recognizes descriptive filenames such as `early-blight.jpg` and `tomato-fruit-late-blight.jpg`. For production predictions on arbitrary photos, connect a trained CNN or inference API in `runAnalysis()` and return the disease key from the image bytes. Photos that do not match confidently are marked for expert review instead of being silently called healthy.
+
+## Disease guide source
+
+The guide grouping and terminology are based on the Tamil Nadu Agricultural University crop-protection reference:
+
+- https://agritech.tnau.ac.in/crop_protection/crop_prot_crop%20diseases_veg_tomato.html
+
+The guide is an educational reference. Confirm treatment choices with a local agriculture officer and follow product labels for any crop-protection input.
 
 ## Sample image attribution
 

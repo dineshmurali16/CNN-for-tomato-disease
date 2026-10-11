@@ -50,7 +50,11 @@
           </a>
           <a class="nav-item" href="#guides">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 3H20v18H6.5A2.5 2.5 0 0 1 4 18.5v-13A2.5 2.5 0 0 1 6.5 3Z"/><path d="M8 7h8M8 11h6"/></svg>
-            Plant guides
+            Care guides
+          </a>
+          <a class="nav-item" href="#tomato-guide">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5z"/><path d="M8 8h8M8 12h5M8 16h7"/><circle cx="17.5" cy="16" r="2.5"/></svg>
+            Tomato disease guide
           </a>
           <a class="nav-item" href="#library">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v17H6.5A2.5 2.5 0 0 1 4 17.5v-12Z"/><path d="M8 7h8M8 11h6M8 15h4"/></svg>
@@ -109,6 +113,25 @@
               <div class="weather-icon">☀</div>
               <div><strong>24° C</strong><span>Sunny · Good for growing</span></div>
             </div>
+          </section>
+
+          <section class="tomato-guide-panel" id="tomato-guide">
+            <div class="guide-panel-top">
+              <div>
+                <p class="section-kicker"><span class="book-kicker">▣</span> Tomato crop protection</p>
+                <h2>Tomato disease guide</h2>
+                <p class="guide-panel-copy">Browse the common diseases, symptoms, and field actions before you scan a plant.</p>
+              </div>
+              <a class="source-link" href="https://agritech.tnau.ac.in/crop_protection/crop_prot_crop%20diseases_veg_tomato.html" target="_blank" rel="noreferrer">Reference guide <span>↗</span></a>
+            </div>
+            <div class="guide-category-tabs" id="guideCategoryTabs" role="tablist" aria-label="Tomato disease categories">
+              <button class="guide-tab active" type="button" data-guide-category="major" role="tab" aria-selected="true"><span>✦</span> Major diseases <b>9</b></button>
+              <button class="guide-tab" type="button" data-guide-category="minor" role="tab" aria-selected="false"><span>◌</span> Minor diseases <b>3</b></button>
+              <button class="guide-tab" type="button" data-guide-category="fruit" role="tab" aria-selected="false"><span>●</span> Fruit disorders <b>4</b></button>
+              <button class="guide-tab" type="button" data-guide-category="pest" role="tab" aria-selected="false"><span>⌁</span> Pests &amp; vectors <b>2</b></button>
+            </div>
+            <div class="guide-category-summary" id="guideCategorySummary">The conditions most often responsible for crop loss. Tap a disease to see its symptoms and what to do next.</div>
+            <div class="guide-disease-grid" id="guideDiseaseGrid"></div>
           </section>
 
           <section class="overview-stats" aria-label="Farm overview">
