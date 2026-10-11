@@ -27,6 +27,6 @@ https://creativecommons.org/publicdomain/zero/1.0/
 
 ## Crop-protection guide
 
-Symptoms and non-chemical field-care guidance are educational summaries; the guide's
-major/minor disease groupings follow the TNAU tomato reference:
-https://agritech.tnau.ac.in/crop_protection/crop_prot_crop%20diseases_veg_tomato.html
+Symptoms and non-chemical field-care guidance are educational summaries integrated into
+the TomatoCare Reference Guide. The guide keeps the major/minor disease grouping and
+tomato crop facts in-app so growers can read them without leaving TomatoCare.

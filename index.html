@@ -20,7 +20,7 @@
   <body>
     <div class="app-shell">
       <aside class="sidebar" id="sidebar">
-        <div class="brand">
+        <a class="brand" href="#tomato-guide" aria-label="Open the TomatoCare reference guide">
           <div class="brand-mark" aria-hidden="true">
             <svg viewBox="0 0 32 32" fill="none">
               <path d="M16 11.5c-4.75 0-8.5 3.2-8.5 8.24C7.5 25.26 11.3 28 16 28s8.5-2.74 8.5-8.26c0-5.04-3.75-8.24-8.5-8.24Z" fill="currentColor" />
@@ -32,7 +32,7 @@
             <strong>Tomato<span>Care</span></strong>
             <small>Plant health, made simple</small>
           </div>
-        </div>
+        </a>
 
         <p class="menu-label">Workspace</p>
         <nav class="main-nav" aria-label="Main navigation">
@@ -91,7 +91,7 @@
           <button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">
             <span></span><span></span><span></span>
           </button>
-          <div class="breadcrumb"><span>Workspace</span><i>/</i><strong>Overview</strong></div>
+          <div class="breadcrumb"><span>Workspace</span><i>/</i><strong>Overview</strong><a class="top-guide-link" href="#tomato-guide"><span>▣</span> TomatoCare Guide</a></div>
           <div class="top-actions">
             <button class="icon-btn notification-btn" aria-label="Notifications">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>
@@ -122,7 +122,13 @@
                 <h2>Tomato disease guide</h2>
                 <p class="guide-panel-copy">Browse the common diseases, symptoms, and field actions before you scan a plant.</p>
               </div>
-              <a class="source-link" href="https://agritech.tnau.ac.in/crop_protection/crop_prot_crop%20diseases_veg_tomato.html" target="_blank" rel="noreferrer">Reference guide <span>↗</span></a>
+              <span class="guide-badge"><span>✓</span> TomatoCare reference</span>
+            </div>
+            <div class="guide-facts" aria-label="Tomato crop facts">
+              <div><span>Crop</span><strong>Tomato</strong></div>
+              <div><span>Scientific name</span><strong><em>Solanum lycopersicum</em></strong></div>
+              <div><span>Family</span><strong>Solanaceae</strong></div>
+              <div><span>Guide covers</span><strong>Leaves · Fruit · Roots · Pests</strong></div>
             </div>
             <div class="guide-category-tabs" id="guideCategoryTabs" role="tablist" aria-label="Tomato disease categories">
               <button class="guide-tab active" type="button" data-guide-category="major" role="tab" aria-selected="true"><span>✦</span> Major diseases <b>9</b></button>

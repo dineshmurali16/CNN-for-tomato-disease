@@ -540,7 +540,7 @@ document.addEventListener("keydown", (event) => { if (event.key === "Escape") cl
 const mobileMenu = document.getElementById("mobileMenu");
 mobileMenu.addEventListener("click", () => document.getElementById("sidebar").classList.toggle("mobile-open"));
 
-document.querySelectorAll(".nav-item, .sidebar-tip a, .view-all, .guide-link").forEach((link) => {
+document.querySelectorAll(".nav-item, .sidebar-tip a, .view-all, .guide-link, .brand, .top-guide-link").forEach((link) => {
   link.addEventListener("click", () => document.getElementById("sidebar").classList.remove("mobile-open"));
 });
 

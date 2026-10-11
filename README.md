@@ -54,13 +54,11 @@ python scripts/collect-dataset.py --per-class 20 --export "C:\Users\pasup\Docume
 
 The local image matcher is a reference/demo workflow. It is not a replacement for a trained CNN and it should not be used as the only basis for pesticide or medical-style decisions. See `public/dataset/README.md` and `public/dataset/SOURCES.md` for collection details and attribution.
 
-## Disease guide source
+## TomatoCare reference guide
 
-The guide grouping and terminology are based on the Tamil Nadu Agricultural University crop-protection reference:
+The crop reference material is built into the application under the TomatoCare name. Open it by clicking the **TomatoCare** brand in the sidebar or the **TomatoCare Guide** button beside Overview. It includes the tomato crop facts, major and minor disease groups, fruit disorders, pests/vectors, signs, field actions, prevention steps, and scan links.
 
-- https://agritech.tnau.ac.in/crop_protection/crop_prot_crop%20diseases_veg_tomato.html
-
-The guide is an educational reference. Confirm treatment choices with a local agriculture officer and follow product labels for any crop-protection input.
+The guide is educational. Confirm treatment choices with a local agriculture officer and follow product labels for any crop-protection input.
 
 ## Sample image attribution
 
