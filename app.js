@@ -17,6 +17,7 @@ const resultLabel = document.getElementById("resultLabel");
 const resultDescription = document.getElementById("resultDescription");
 const detectedName = document.getElementById("detectedName");
 const confidenceText = document.getElementById("confidenceText");
+const affectedPart = document.getElementById("affectedPart");
 const preventionList = document.getElementById("preventionList");
 const healthScore = document.getElementById("healthScore");
 const viewReport = document.getElementById("viewReport");
@@ -233,15 +234,18 @@ function setHealthResult(diagnosisKey = "healthy", confidenceOverride = "") {
     : '<span class="healthy-dot"></span> Plant health check';
   detectedName.textContent = result.name;
   confidenceText.textContent = confidenceOverride || result.confidence;
+  affectedPart.textContent = `Affected part: ${result.bodyPart || (result.isDisease ? "Leaf" : "Leaf or fruit")}`;
   preventionList.innerHTML = result.prevention.map((item) => `<li>${item}</li>`).join("");
   viewReport.innerHTML = result.isDisease ? 'View prevention plan <span>→</span>' : 'View health report <span>→</span>';
 }
 
 function inferUploadedDiagnosis(file) {
   const name = file.name.toLowerCase();
-  for (const [key, data] of Object.entries(diagnosisCatalog)) {
-    if (data.fileTokens?.some((token) => name.includes(token))) return key;
-  }
+  const tokenMatches = Object.entries(diagnosisCatalog).flatMap(([key, data]) => (data.fileTokens || [])
+    .filter((token) => name.includes(token))
+    .map((token) => ({ key, token })));
+  tokenMatches.sort((first, second) => second.token.length - first.token.length);
+  if (tokenMatches[0]) return tokenMatches[0].key;
   if (name.includes("late") && name.includes("blight")) return "lateBlight";
   if (name.includes("early") && name.includes("blight")) return "earlyBlight";
   if (name.includes("mold") || name.includes("mildew")) return "leafMold";
